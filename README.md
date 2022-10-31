@@ -1,2 +1,2 @@
 # TietoliikenteenSovellusprojekti
-Vuoden 2022 projekti
+Vuoden 2022 tietoliikenteen sovellusprojekti
