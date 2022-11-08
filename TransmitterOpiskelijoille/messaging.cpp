@@ -19,8 +19,21 @@ Messaging::~Messaging()
 }
 void Messaging::createMessage(Measurement m)
 {
+    uint8_t highX = m.x>>8;
+    uint8_t lowX = m.x&0x00ff;
+    uint8_t highY = m.y>>8;
+    uint8_t lowY = m.y&0x00ff;
+    uint8_t highZ = m.z>>8;
+    uint8_t lowZ = m.z&0x00ff;
+    
+    data[0] = highX;
+    data[1] = lowX;
+    data[2] = highY;
+    data[3] = lowY;
+    data[4] = highZ;
+    data[5] = lowZ;
 
-
+    messageLength = 6;
 }
 bool Messaging::sendMessage(uint8_t id, uint8_t flags)
 {
@@ -40,7 +53,6 @@ bool Messaging::sendMessage(uint8_t id, uint8_t flags)
      pmanager->setHeaderFlags(flags);
      
      bool returnValue = false;
-  
      if (pmanager->sendto(data, messageLength, RECEIVER_ADDRESS))
      {
         returnValue = true;
