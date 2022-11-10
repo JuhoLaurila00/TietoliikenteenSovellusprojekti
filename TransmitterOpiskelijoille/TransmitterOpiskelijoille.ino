@@ -74,6 +74,5 @@ void loop()
        Serial.println("Reciver did not get the message. Need to resend it");
        M--;  // Let's just revind for loop 
      }
-     delay(10);
   } // end of for
 }   // end of loop
