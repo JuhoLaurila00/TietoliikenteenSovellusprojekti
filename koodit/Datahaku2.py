@@ -15,6 +15,6 @@ print("Total number of rows in table: ", cursor.rowcount)
 print("Column Names: ", cursor.column_names)
 
 print(cursor)
-with open('Desktop/data.csv', 'w') as f:
+with open('data.csv', 'w') as f:
     for (x) in data:
         f.write(f"{x}\n")

@@ -7,5 +7,5 @@ data = r.text
 
 print(data)
 
-with open('Desktop/data.csv', 'w') as f:
+with open('data.csv', 'w') as f:
     f.write(data) 
