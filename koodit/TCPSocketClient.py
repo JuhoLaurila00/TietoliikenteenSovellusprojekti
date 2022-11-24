@@ -14,9 +14,8 @@ except Exception as e:
     print ("Other exception: %s" %str(e)) 
 
 reply = bytearray()
-n = 15000
-while len(reply) < n:
-    packet = client_socket.recv(n - len(reply))
+while True:
+    packet = client_socket.recv(4096)
     if not packet: 
         break
     reply.extend(packet)
