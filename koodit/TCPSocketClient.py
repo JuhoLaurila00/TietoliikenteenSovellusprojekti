@@ -1,6 +1,6 @@
 import socket
 import sys
-
+import pandas as pd
 client_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
 server_address = ('172.20.241.9', 20000)
@@ -25,8 +25,10 @@ while len(reply) < n:
 client_socket.close() 
 
 data = reply.decode()
-print(data)
-
 
 with open('data.csv', 'w') as f:
     f.write(data) 
+
+df = pd.read_csv('data.csv', delim_whitespace=True, header=None)
+print(df)
+df.to_csv('data.csv')
