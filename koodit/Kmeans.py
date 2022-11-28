@@ -8,14 +8,17 @@ from sklearn.cluster import KMeans
 data = np.loadtxt('putty.log')
 
 nData = np.zeros((int(data.shape[0] / 3), 3))
+nData[:,0] = data[0:len(data):3]
+nData[:,1] = data[1:len(data):3]
+nData[:,2] = data[2:len(data):3]
 
-i = 0
-tracker = 0
-while i < nData.shape[0]:
-    nData[i][0] = data[tracker]
-    nData[i][1] = data[tracker+1]
-    nData[i][2] = data[tracker+2]
-    i+=1
-    tracker+=3
+#i = 0
+#tracker = 0
+#while i < nData.shape[0]:
+#    nData[i][0] = data[tracker]
+#    nData[i][1] = data[tracker+1]
+#    nData[i][2] = data[tracker+2]
+#    i+=1
+#    tracker+=3
     
 print(nData)
