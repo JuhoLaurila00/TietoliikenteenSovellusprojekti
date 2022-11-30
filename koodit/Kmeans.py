@@ -71,4 +71,22 @@ plt.show()
 
 
 
+Start = 'int kp[4][3] = '
+SendableData = '{\n{' + str(CenterPoints[0,:]) + '},\n{' + str(CenterPoints[1,:]) + '},\n{' + str(CenterPoints[2,:]) + '},\n{' + str(CenterPoints[3,:]) + '}};'
+
+SendableData = SendableData.replace('[','')
+SendableData = SendableData.replace(']','')
+SendableData = SendableData.replace(' ',',')
+
+SendableData = Start + SendableData
+print(SendableData)
+
+with open('CenterPoints.h', 'w') as f:
+    f.write(SendableData) 
+
+
+
+
+
+
 
