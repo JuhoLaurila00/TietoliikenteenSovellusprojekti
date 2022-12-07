@@ -11,26 +11,28 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  //Montako kertaa looppi tehdään
   //Missä asennossa(UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4)
-  // eli serial monitorille esim:
-  // (Kerrottu asento)  (Algotimin mukainen asento)
-  //Nappi voidaan ottaa pois
-  //Tallenetaal putyllä putty logiin, jota käytetään confusion matrixissa pythonissa
   
    int LoopAmount = 0;
    int GivenPos = 0;
-   if(Serial.available()>0)
+   Serial.println("Give loop amount");
+   while(LoopAmount==0)
    {
-       Serial.println("Give loop amount");
-       LoopAmount = Serial.parseInt();
+      if(Serial.available()>0)
+      {
+        LoopAmount = Serial.parseInt();
+      }
    }
-   if(Serial.available()>0)
+   Serial.println("Give position (UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4)");
+   while(GivenPos==0)
    {
-       Serial.println("Give position");
-       GivenPos = Serial.parseInt();
+      if(Serial.available()>0)
+      {
+        GivenPos = Serial.parseInt();
+      }
    }
+   
+   
    for(int i = 0; i < LoopAmount; i++){
     int minVal = 400;
     int X = analogRead(A0);
@@ -54,6 +56,7 @@ void loop() {
     if(minVal == Distances[2]){Serial.print("3");}
     if(minVal == Distances[3]){Serial.print("4");}
     Serial.println();
+    delay(100);
     
   }
   
