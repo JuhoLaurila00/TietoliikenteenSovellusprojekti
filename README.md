@@ -40,4 +40,5 @@ Vuoden 2022 tietoliikenteen sovellusprojekti
 ## K-means algoritmi
 > Heti ensimmäisenä sarakkeet 5,6 ja 7 (x,y,z) haetaan data.csv nimisestä tiedostosta, johon tietokannan tiedot tallennettiin Datahaku2.py:llä. 
 
-![image](puttylogscatter.png)
+![puttylogscatter](https://user-images.githubusercontent.com/97531298/206319716-34ec5c5a-6d3e-44a2-ad66-80aaf8f91109.png)
+
