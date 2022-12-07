@@ -1,6 +1,5 @@
 #include "CenterPoints.h"
 
-int Checker = 0;
 int Distances[] = {0,0,0,0};
 
 
@@ -18,11 +17,21 @@ void loop() {
   // eli serial monitorille esim:
   // (Kerrottu asento)  (Algotimin mukainen asento)
   //Nappi voidaan ottaa pois
-  //Tallenetaal putyllä putty logiin, jota käytetään confusion matrixissa pythonissa 
+  //Tallenetaal putyllä putty logiin, jota käytetään confusion matrixissa pythonissa
   
-  if(digitalRead(4) == HIGH && Checker == 0)
-  {
-    Checker = 1;
+   int LoopAmount = 0;
+   int GivenPos = 0;
+   if(Serial.available()>0)
+   {
+       Serial.println("Give loop amount");
+       LoopAmount = Serial.parseInt();
+   }
+   if(Serial.available()>0)
+   {
+       Serial.println("Give position");
+       GivenPos = Serial.parseInt();
+   }
+   for(int i = 0; i < LoopAmount; i++){
     int minVal = 400;
     int X = analogRead(A0);
     int Y = analogRead(A1);
@@ -33,22 +42,20 @@ void loop() {
     Distances[2] = Distance(X,Y,Z,kp[2][0],kp[2][1],kp[2][2]);
     Distances[3] = Distance(X,Y,Z,kp[3][0],kp[3][1],kp[3][2]);
 
-    for(int i = 0; i < 4; i++){
-      if (Distances[i] < minVal) {
-         minVal = Distances[i];
+    for(int a = 0; a < 4; a++){
+      if (Distances[a] < minVal) {
+         minVal = Distances[a];
       }
     }
+    Serial.print(GivenPos);
+    Serial.print("  ");
+    if(minVal == Distances[0]){Serial.print("1");}
+    if(minVal == Distances[1]){Serial.print("2");}
+    if(minVal == Distances[2]){Serial.print("3");}
+    if(minVal == Distances[3]){Serial.print("4");}
+    Serial.println();
     
-    if(minVal == Distances[0]){Serial.println("1");}
-    if(minVal == Distances[1]){Serial.println("2");}
-    if(minVal == Distances[2]){Serial.println("3");}
-    if(minVal == Distances[3]){Serial.println("4");}
-    
-  } else if (digitalRead(4) == LOW)
-  {
-    Checker = 0;
   }
-  
   
 }
 
