@@ -42,3 +42,6 @@ Vuoden 2022 tietoliikenteen sovellusprojekti
 
 ![puttylogscatter](https://user-images.githubusercontent.com/97531298/206319716-34ec5c5a-6d3e-44a2-ad66-80aaf8f91109.png)
 
+Kuva opettajan datasta (putty.log) tehdystä scatteristä, jossa näkyy neljä clusteria. Keskipisteitä kuvassa ei näy vielä tässä vaiheessa.
+
+## Confusion Matrix
