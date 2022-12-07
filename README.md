@@ -40,4 +40,4 @@ Vuoden 2022 tietoliikenteen sovellusprojekti
 ## K-means algoritmi
 > Heti ensimmäisenä sarakkeet 5,6 ja 7 (x,y,z) haetaan data.csv nimisestä tiedostosta, johon tietokannan tiedot tallennettiin Datahaku2.py:llä. 
 <br>
-> Tämän jälkeen arvotaan neljä aloitus keskipistettä x,y,z arvojen pienimmän ja suurimman arvojen mukaan.
+![Scatter](https://user-images.githubusercontent.com/97531298/206319217-a59bc715-ce0e-440d-9228-f0a564d1684b.png)
