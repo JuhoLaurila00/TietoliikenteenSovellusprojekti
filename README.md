@@ -1,23 +1,70 @@
----
-pagetitle:  Tietoliikenteen Sovellusprojekti
-author: Juho Laurila
----
+<span style="color:red">
+<font size="10">
+WIP README 
+</font>
+</span>
 
 # Tietoliikenteen Sovellusprojekti
-Vuoden 2022 tietoliikenteen sovellusprojekti
-<br/>
-<br/>
-# Arkkitehtuurikuva
+Syksyn 2022  tietoliikenteen sovellusprojekti
+
+## Sisältö
+1. [Kuvaus Projektista](#kuvaus-projektista)
+2. [Käytetyt Ohjelmistot](#käytetyt-ohjelmistot)
+3. [Arkkitehtuuri](#arkkitehtuuri)
+4. [Tehdyt Ohjelmat](#tehdyt-ohjelmat)
+5. [Arduino mittaukset ja lähetys](#arduino-mittaukset-ja-lähetys)
+    1. [Komponentit](#komponentit)
+    2. [Arduinon ohjelma](#arduinon-ohjelma)
+6. [Python](#python)
+    1. [TCP/socket ja datahaku](#tcpsocket-ja-datahaku)
+    2. [K-means](#k-means)
+    3. [Confusion Matrix](#confusion-matrix)
+7. [Arduino K-means](#arduino-k-means)
+
+## Kuvaus Projektista
+<span style="color:red">
+<font size="4">
+!!! LYHYT KUVAUS !!! 
+</font>
+</span>
+
+## Käytetyt Ohjelmistot
+
+<span style="color:red">
+<font size="4">
+!!! KAIKKI KÄYTETYT OHJELMAT !!! 
+</font>
+</span>
+
+## Arkkitehtuuri
+
 ![image](https://user-images.githubusercontent.com/97531298/199923738-0a49c750-2408-4f4b-a696-a13558a3ca13.png)
 
-# Arduinon toiminta
-## Komponentit (Lähettäjä)
+<span style="color:red">
+<font size="5">
+!!! PÄIVITÄ KUVA !!! 
+</font>
+</span>
+
+## Tehdyt Ohjelmat
+> Lista tehdyistä ohjelmista, joita projekti käyttää:
+
+> Kuvaukset ohjelmista alempana
+
+<span style="color:red">
+<font size="5">
+!!! MUOKKAA OHJELMIEN NIMET JÄRKEVIKSI !!!
+</font>
+</span>
+
+## Arduino mittaukset ja lähetys
+### Komponentit
 - GY-61 Kiihtyvyysanturi
 - Arduino
 - RWS-371 Vastaanotin
 - TWS-BS Lähetin
 
-## Arduinon koodi mittamissen ja lähettämiseen
+### Arduinon ohjelma
 > Koodi koostuu pääohjelmasta ja kahdesta luokasta (accelerator ja messaging).
 > 
 > Accelerator luokkaa käytetään mittausten tekemiseen ja sen tallentamiseen Measurement nimiseen struktiin, jossa on sisällä x,y,z arvot.
@@ -26,8 +73,8 @@ Vuoden 2022 tietoliikenteen sovellusprojekti
 >
 > Pääohjelmassa määritetään mittausten määrä sekä missä asennossa mittaukset tehdään käyttäjän inputin mukaan. Asento sijoitetaan flags nimiseen muuttujaan hexadecimaalina, joka lähetetään myös tietokantaan.
 
-# Python
-## Tiedon hakeminen tietokannasta
+## Python
+### TCP/socket ja datahaku
 > Tiedon sain haettua monella eri tapaa, jotka ovat:
 > - requests (Datahaku.py ja Datahaku3.py)
 > - mysql.connector (Datahaku2.py)
@@ -37,11 +84,40 @@ Vuoden 2022 tietoliikenteen sovellusprojekti
 > - TCPSocketClient.py:llä ei saanut kaikkea tietoa tietokannasta
 > - Datahaku2.py:llä sain kaiken tiedon tietokannasta, mutta sen oli turhan sotkuinen
 
-## K-means algoritmi
-> Heti ensimmäisenä sarakkeet 5,6 ja 7 (x,y,z) haetaan data.csv nimisestä tiedostosta, johon tietokannan tiedot tallennettiin Datahaku2.py:llä. 
+<span style="color:red">
+<font size="5">
+!!! TARKEMPI KUVAUS OHJELMAN TOIMINNASTA !!! 
+</font>
+</span>
+
+### K-means
 
 ![puttylogscatter](https://user-images.githubusercontent.com/97531298/206319716-34ec5c5a-6d3e-44a2-ad66-80aaf8f91109.png)
 
+<span style="color:red">
+<font size="5">
+!!! PÄIVITÄ/LISÄÄ KUVA OMASTA DATASTA !!! 
+</br>
+!!! KUVAUS TOIMINNASTA !!!
+</font>
+</span>
+
 Kuva opettajan datasta (putty.log) tehdystä scatteristä, jossa näkyy neljä clusteria. Keskipisteitä kuvassa ei näy vielä tässä vaiheessa.
 
-## Confusion Matrix
+### Confusion Matrix
+
+<span style="color:red">
+<font size="5">
+!!! KUVA TULOKSESTA !!! 
+</br>
+!!! KUVAUS TOIMINNASTA !!!
+</font>
+</span>
+
+## Arduino K-means
+
+<span style="color:red">
+<font size="5">
+!!! KUVAUS TOIMINNASTA !!!
+</font>
+</span>
