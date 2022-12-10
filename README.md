@@ -122,7 +122,9 @@ Data on nyt valmis K-means algoritmille.
 
 ### K-means
 
-![puttylogscatter](https://user-images.githubusercontent.com/97531298/206319716-34ec5c5a-6d3e-44a2-ad66-80aaf8f91109.png)
+![KmeansNoCentres](https://user-images.githubusercontent.com/97531298/206867795-27e7f2ee-ad64-4867-9fe5-4d7fc70bac0a.png)
+![Kmeans](https://user-images.githubusercontent.com/97531298/206867799-ed382f48-2448-4f95-989e-91aff4e896cc.png)
+
 
 <span style="color:red">
 <font size="5">
@@ -135,6 +137,7 @@ Data on nyt valmis K-means algoritmille.
 Kuva opettajan datasta (putty.log) tehdystä scatteristä, jossa näkyy neljä clusteria. Keskipisteitä kuvassa ei näy vielä tässä vaiheessa.
 
 ### Confusion Matrix
+![CM](https://user-images.githubusercontent.com/97531298/206867805-340ebdb5-3f3a-413b-ac64-2d08fd3e56e5.PNG)
 
 <span style="color:red">
 <font size="5">
