@@ -1,5 +1,6 @@
 import requests
-import csv
+
+#Tämä ohjelma hakee tiedot tietokannasta (Ohjelma oli vain testaamista varten)
 
 r = requests.get('http://172.20.241.9/luedataa_kannasta_groupid_csv.php?groupid=59')
 

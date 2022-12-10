@@ -11,7 +11,7 @@ def DistanceCalc(Arr1, Arr2):
     return dist
 '''
 
-df = pd.read_csv('data.csv', usecols=['5','6','7'])
+df = pd.read_csv('xyz_data.csv', usecols=['5','6','7'])
 print(df)
 nData=df.to_numpy()
 

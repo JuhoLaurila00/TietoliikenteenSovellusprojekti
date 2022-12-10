@@ -17,45 +17,60 @@ Syksyn 2022  tietoliikenteen sovellusprojekti
     2. [Arduinon ohjelma](#arduinon-ohjelma)
 6. [Python](#python)
     1. [TCP/socket ja datahaku](#tcpsocket-ja-datahaku)
-    2. [K-means](#k-means)
-    3. [Confusion Matrix](#confusion-matrix)
+    2. [Requests (MainDatahaku.py)](#requests-maindatahakupy)
+    3. [K-means](#k-means)
+    4. [Confusion Matrix](#confusion-matrix)
 7. [Arduino K-means](#arduino-k-means)
 
+</br>
+
 ## Kuvaus Projektista
-<span style="color:red">
-<font size="4">
-!!! LYHYT KUVAUS !!! 
-</font>
-</span>
+
+    Projektissa käytetään arduinoa xyz kiihtyvysdatan mittaamiseen ja lähettämiisen opettajan vastaanottavaan laitteeseen 433MHz radiolähettimellä. Laite laittaa datan MySQL tietokantaan, josta se sitten haetaan omalla tietokoneella pythonilla ja käsitellään se K-means algoritmilla. Tarkkuus tarkistetaan tämän jälkeen arduinolla, kun K-means koodi tallentaa CenterPoints.h nimisen tiedoston, jota tullaan käyttämään arduino koodissa.
+
+</br>
 
 ## Käytetyt Ohjelmistot
 
-<span style="color:red">
-<font size="4">
-!!! KAIKKI KÄYTETYT OHJELMAT !!! 
-</font>
-</span>
+- Visual Studio Code (Python 
+- Arduino IDE (Arduino koodille)koodille)
+- Wireshark (Data liikenteen seuraamiseen)
+
+</br>
+
 
 ## Arkkitehtuuri
 
 ![image](https://user-images.githubusercontent.com/97531298/199923738-0a49c750-2408-4f4b-a696-a13558a3ca13.png)
 
-<span style="color:red">
-<font size="5">
-!!! PÄIVITÄ KUVA !!! 
-</font>
-</span>
+</br>
 
 ## Tehdyt Ohjelmat
-> Lista tehdyistä ohjelmista, joita projekti käyttää:
+Lista tehdyistä ohjelmista, joita projekti käyttää:
 
-> Kuvaukset ohjelmista alempana
+- Transmitter.ino
+    - accelerator luokka
+    - messaging luokka
+- MainDatahaku.py
+- Kmeans.py
+- ArduinoKmeans.ino
+- ConfusionMatrix.py
 
-<span style="color:red">
-<font size="5">
-!!! MUOKKAA OHJELMIEN NIMET JÄRKEVIKSI !!!
-</font>
-</span>
+Lista tehdyistä ohjelmista, joita käytin testailuun:
+
+- RequestsDatahaku.py
+- ConnectorDatahaku.py
+- TCPSocketDatahaku.py
+
+Tiedostot joita ohjelmat tekevät:
+- RequestsDatahaku.py, ConnectorDatahaku.py, TCPSocketDatahaku.py
+    - -> data.csv
+- MainDatahaku.py
+    - -> xyz_data.csv
+
+Kuvaukset ohjelmista alempana
+
+</br>
 
 ## Arduino mittaukset ja lähetys
 ### Komponentit
@@ -65,24 +80,44 @@ Syksyn 2022  tietoliikenteen sovellusprojekti
 - TWS-BS Lähetin
 
 ### Arduinon ohjelma
-> Koodi koostuu pääohjelmasta ja kahdesta luokasta (accelerator ja messaging).
-> 
-> Accelerator luokkaa käytetään mittausten tekemiseen ja sen tallentamiseen Measurement nimiseen struktiin, jossa on sisällä x,y,z arvot.
->
-> Messaging luokkaa käytään datan muokkamiseen lähetettävään muotoon ja datan lähettämiseen sekä varmistusviestin vastaanottamiseen. createMessage metodissa x,y,z arvoista muodostetaan jokaisesta 2 high bittiä ja 8 low bittiä jotta data saadaan siirrettyä.
->
-> Pääohjelmassa määritetään mittausten määrä sekä missä asennossa mittaukset tehdään käyttäjän inputin mukaan. Asento sijoitetaan flags nimiseen muuttujaan hexadecimaalina, joka lähetetään myös tietokantaan.
+    Koodi koostuu pääohjelmasta ja kahdesta luokasta (accelerator ja messaging).
+ 
+    Accelerator luokkaa käytetään mittausten tekemiseen ja sen tallentamiseen Measurement nimiseen struktiin, jossa on sisällä x,y,z arvot.
+
+    Messaging luokkaa käytään datan muokkamiseen lähetettävään muotoon ja datan lähettämiseen sekä varmistusviestin vastaanottamiseen. createMessage metodissa x,y,z arvoista muodostetaan jokaisesta 2 high bittiä ja 8 low bittiä jotta data saadaan siirrettyä.
+
+    Pääohjelmassa määritetään mittausten määrä sekä missä asennossa mittaukset tehdään käyttäjän inputin mukaan. Asento sijoitetaan flags nimiseen muuttujaan hexadecimaalina, joka lähetetään myös tietokantaan.
+
+</br>
 
 ## Python
-### TCP/socket ja datahaku
-> Tiedon sain haettua monella eri tapaa, jotka ovat:
-> - requests (Datahaku.py ja Datahaku3.py)
-> - mysql.connector (Datahaku2.py)
-> - TCP-socket (TCPSocketClient.py)
+    Ohjelmat joiden nimen edessä on [T] ovat testi ohjelmia. [P] merkitsee ohjelmat, joita projekti käyttää toimiakseen.
 
-> Käytin Datahaku2.py:tä lopullisen tiedon hakemiseen, joka syötetään k-means:ille. Tein näin, koska requests:illa tiedon sai helpoiten ja muiden ratkaisujen kanssa oli ongelmia esim: 
-> - TCPSocketClient.py:llä ei saanut kaikkea tietoa tietokannasta
-> - Datahaku2.py:llä sain kaiken tiedon tietokannasta, mutta sen oli turhan sotkuinen
+### TCP/socket ja datahaku
+ Tiedon sain haettua monella eri tapaa, jotka ovat:
+ - requests (RequestsDatahaku.py ja MainDatahaku.py)
+ - mysql.connector (ConnectorDatahaku.py)
+ - TCP-socket (TCPSocketDatahaku.py)
+
+ Käytin requestia lopullisen tiedon hakemiseen, joka syötetään k-means:ille. Tein näin, koska requests:illa tiedon sai helpoiten ja muiden ratkaisujen kanssa oli ongelmia esim: 
+ - TCP-socketilla ei saanut kaikkea tietoa tietokannasta (Vain 300 riviä tietoa)
+ - mysql.connector:illa sain kaiken tiedon tietokannasta, mutta sen oli turhan sotkuinen, enkä saanut tietoa helposti formatoitua pandaksella.
+
+ ### Requests (MainDatahaku.py)
+
+ Ohjelma hakee data r nimiseen muuttujaan requests.get komennolla, jonka jälkeen se muutetaan tekstiksi data nimiseen muuttujaan.
+   
+Ohjelma luo ja tallentaa datan xyz_data.csv tiedostoon seuraavalla koodilla:
+> with open('xyz_data.csv', 'w') as f:
+>
+> f.write(data) 
+  
+Heti sen jälkeen ohjelma formatoi saadun datan selvemmäksi K-means ohjelmalle tällä koodilla:
+>df = pd.read_csv('xyz_data.csv', delimiter=';', header=None)
+>
+>print(df)
+>
+>df.to_csv('xyz_data.csv')
 
 <span style="color:red">
 <font size="5">
@@ -113,6 +148,8 @@ Kuva opettajan datasta (putty.log) tehdystä scatteristä, jossa näkyy neljä c
 !!! KUVAUS TOIMINNASTA !!!
 </font>
 </span>
+
+</br>
 
 ## Arduino K-means
 

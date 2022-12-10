@@ -1,5 +1,4 @@
 import socket
-import sys
 import pandas as pd
 client_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 

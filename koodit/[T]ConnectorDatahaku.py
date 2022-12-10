@@ -1,5 +1,7 @@
 import mysql.connector
 
+#Tämä ohjelma hakee tiedot tietokannasta (Ohjelma oli vain testaamista varten)
+
 connection = mysql.connector.connect(host='172.20.241.9',
                                     database='measurements',
                                     user='dbaccess_ro',
