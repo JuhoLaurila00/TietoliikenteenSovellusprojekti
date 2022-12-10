@@ -121,9 +121,10 @@ Heti sen jälkeen ohjelma formatoi saadun datan selvemmäksi K-means ohjelmalle 
 Data on nyt valmis K-means algoritmille.
 
 ### K-means
+![kmeans1](https://user-images.githubusercontent.com/97531298/206868055-11be2b60-5968-4c7b-aca1-247cfa457db9.png)
+![kmeans2](https://user-images.githubusercontent.com/97531298/206868058-67e9b2d7-c56c-4480-af75-0957dac56724.png)
 
-![KmeansNoCentres](https://user-images.githubusercontent.com/97531298/206867795-27e7f2ee-ad64-4867-9fe5-4d7fc70bac0a.png)
-![Kmeans](https://user-images.githubusercontent.com/97531298/206867799-ed382f48-2448-4f95-989e-91aff4e896cc.png)
+
 
 
 <span style="color:red">
