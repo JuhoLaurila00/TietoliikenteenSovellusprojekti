@@ -118,11 +118,7 @@ Heti sen jälkeen ohjelma formatoi saadun datan selvemmäksi K-means ohjelmalle 
 >
 >df.to_csv('xyz_data.csv')
 
-<span style="color:red">
-<font size="5">
-!!! TARKEMPI KUVAUS OHJELMAN TOIMINNASTA !!! 
-</font>
-</span>
+Data on nyt valmis K-means algoritmille.
 
 ### K-means
 
