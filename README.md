@@ -26,14 +26,14 @@ Syksyn 2022  tietoliikenteen sovellusprojekti
 
 ## Kuvaus Projektista
 
-    Projektissa käytetään arduinoa xyz kiihtyvysdatan mittaamiseen ja lähettämiisen opettajan vastaanottavaan laitteeseen 433MHz radiolähettimellä. Laite laittaa datan MySQL tietokantaan, josta se sitten haetaan omalla tietokoneella pythonilla ja käsitellään se K-means algoritmilla. Tarkkuus tarkistetaan tämän jälkeen arduinolla, kun K-means koodi tallentaa CenterPoints.h nimisen tiedoston, jota tullaan käyttämään arduino koodissa.
+  Projektissa käytetään arduinoa xyz kiihtyvysdatan mittaamiseen ja lähettämiisen opettajan vastaanottavaan laitteeseen 433MHz radiolähettimellä. Laite laittaa datan MySQL tietokantaan, josta se sitten haetaan omalla tietokoneella pythonilla ja käsitellään se K-means algoritmilla. Tarkkuus tarkistetaan tämän jälkeen arduinolla, kun K-means koodi tallentaa CenterPoints.h nimisen tiedoston, jota tullaan käyttämään arduino koodissa.
 
 </br>
 
 ## Käytetyt Ohjelmistot
 
-- Visual Studio Code (Python 
-- Arduino IDE (Arduino koodille)koodille)
+- Visual Studio Code (Python koodille)
+- Arduino IDE (Arduino koodille)
 - Wireshark (Data liikenteen seuraamiseen)
 
 </br>
@@ -57,7 +57,6 @@ Lista tehdyistä ohjelmista, joita projekti käyttää:
 - ConfusionMatrix.py
 
 Lista tehdyistä ohjelmista, joita käytin testailuun:
-
 - RequestsDatahaku.py
 - ConnectorDatahaku.py
 - TCPSocketDatahaku.py
@@ -80,18 +79,18 @@ Kuvaukset ohjelmista alempana
 - TWS-BS Lähetin
 
 ### Arduinon ohjelma
-    Koodi koostuu pääohjelmasta ja kahdesta luokasta (accelerator ja messaging).
+ Koodi koostuu pääohjelmasta ja kahdesta luokasta (accelerator ja messaging).
  
-    Accelerator luokkaa käytetään mittausten tekemiseen ja sen tallentamiseen Measurement nimiseen struktiin, jossa on sisällä x,y,z arvot.
+ Accelerator luokkaa käytetään mittausten tekemiseen ja sen tallentamiseen Measurement nimiseen struktiin, jossa on sisällä x,y,z arvot.
 
-    Messaging luokkaa käytään datan muokkamiseen lähetettävään muotoon ja datan lähettämiseen sekä varmistusviestin vastaanottamiseen. createMessage metodissa x,y,z arvoista muodostetaan jokaisesta 2 high bittiä ja 8 low bittiä jotta data saadaan siirrettyä.
+ Messaging luokkaa käytään datan muokkamiseen lähetettävään muotoon ja datan lähettämiseen sekä varmistusviestin vastaanottamiseen. createMessage metodissa x,y,z arvoista muodostetaan jokaisesta 2 high bittiä ja 8 low bittiä jotta data saadaan siirrettyä.
 
-    Pääohjelmassa määritetään mittausten määrä sekä missä asennossa mittaukset tehdään käyttäjän inputin mukaan. Asento sijoitetaan flags nimiseen muuttujaan hexadecimaalina, joka lähetetään myös tietokantaan.
+ Pääohjelmassa määritetään mittausten määrä sekä missä asennossa mittaukset tehdään käyttäjän inputin mukaan. Asento sijoitetaan flags nimiseen muuttujaan hexadecimaalina, joka lähetetään myös tietokantaan.
 
 </br>
 
 ## Python
-    Ohjelmat joiden nimen edessä on [T] ovat testi ohjelmia. [P] merkitsee ohjelmat, joita projekti käyttää toimiakseen.
+Ohjelmat joiden nimen edessä on [T] ovat testi ohjelmia. [P] merkitsee ohjelmat, joita projekti käyttää toimiakseen.
 
 ### TCP/socket ja datahaku
  Tiedon sain haettua monella eri tapaa, jotka ovat:
