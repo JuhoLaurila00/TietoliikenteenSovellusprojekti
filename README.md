@@ -122,28 +122,29 @@ Data on nyt valmis K-means algoritmille.
 
 ### K-means
 ![kmeans1](https://user-images.githubusercontent.com/97531298/206868055-11be2b60-5968-4c7b-aca1-247cfa457db9.png)
+ 
+Kuva datasta ennen k-means algoritmin määrittämiä keskipisteitä. Jokainen sininen pallo on xyz datapiste, joita on yli 400 omassa datassani. Osa palloista on niin lähellä toisiaan että kuva näyttää ne päällekkäin. 
+
+</br>
+
 ![kmeans2](https://user-images.githubusercontent.com/97531298/206868058-67e9b2d7-c56c-4480-af75-0957dac56724.png)
+
+Kuva datasta algoritmin jälkeen. Punaiset rastit ovat keskipisteet ja vihreät kolmiot ovat pisteitä joissa keskipiste oli jossain välissä algoritmia.
 
 
 
 
 <span style="color:red">
 <font size="5">
-!!! PÄIVITÄ/LISÄÄ KUVA OMASTA DATASTA !!! 
-</br>
 !!! KUVAUS TOIMINNASTA !!!
 </font>
 </span>
-
-Kuva opettajan datasta (putty.log) tehdystä scatteristä, jossa näkyy neljä clusteria. Keskipisteitä kuvassa ei näy vielä tässä vaiheessa.
 
 ### Confusion Matrix
 ![CM](https://user-images.githubusercontent.com/97531298/206867805-340ebdb5-3f3a-413b-ac64-2d08fd3e56e5.PNG)
 
 <span style="color:red">
 <font size="5">
-!!! KUVA TULOKSESTA !!! 
-</br>
 !!! KUVAUS TOIMINNASTA !!!
 </font>
 </span>
