@@ -198,8 +198,60 @@ Kuva datasta plotattuna algoritmin jälkeen. Punaiset rastit ovat keskipisteet j
 
 ## Arduino K-means
 
-<span style="color:red">
-<font size="5">
-!!! KUVAUS TOIMINNASTA !!!
-</font>
-</span>
+ArduinoKmeans ohjelmassa katsotaan kuinka tarkka algoritmi on kmeansin antamilla keskipisteillä. Ensimmäiseksi otetaan ohjelmaan mukaan edellisen ohjelman tekemä CenterPoints.h tiedosto, joka sisältää kmeansin antamat keskipisteet. 
+<pre>
+#include "CenterPoints.h"
+</pre>
+
+Itse arduinoon oli aluksi kytketty nappi ja kiihtyvyysanturi. Nappia painamalla arduino teki yhden mittauksen ja tarkisti mikä neljästä keskipisteestä oli lähimpänä kiihtyvyysanturin arvoa. Tein funktion joka laski etäisyyden:
+<pre>
+int Distance(int mX,int mY,int mZ,int cX,int cY,int cZ)
+{
+    int Value1 = pow(mX-cX,2);
+    int Value2 = pow(mY-cY,2);
+    int Value3 = pow(mZ-cZ,2);
+    int dist = sqrt(Value1+Value2+Value3);
+    return dist;
+}
+</pre>
+
+Ohjelma teki Distances nimisen arrayn johon etäisyys jokaiseen keskipisteeseen laitettiin. Sen jälkeen tarkistetaan mikä keskipisteistä oli lähimpänä for loopissa.
+<pre>
+    Distances[0] = Distance(X,Y,Z,kp[0][0],kp[0][1],kp[0][2]);
+    Distances[1] = Distance(X,Y,Z,kp[1][0],kp[1][1],kp[1][2]);
+    Distances[2] = Distance(X,Y,Z,kp[2][0],kp[2][1],kp[2][2]);
+    Distances[3] = Distance(X,Y,Z,kp[3][0],kp[3][1],kp[3][2]);
+
+    for(int a = 0; a < 4; a++){
+      if (Distances[a] < minVal) {
+         minVal = Distances[a];
+      }
+    }
+</pre>
+<sup>
+Koodissa minVal muuttuja alustettiin arvolla, joka oli pakosta suurempi kuin yksikään mittauksen arvo. Tässä tapauksessa 400. Alustus tehtiin joka napin painalluksella heti alussa.
+</sup>
+
+</br>
+
+Kun olin testannut, että koodi toimii muutin sitä sellaiseksi että se kysyy käyttäjältä montako mittausta tehdään ja missä asennossa. Ohjelma tulosti loopin sisällä sitten käyttäjän väittämän asennon ja algoritmin antaman asennon.
+<pre>
+    Serial.print(GivenPos);
+    Serial.print("  ");
+    if(minVal == Distances[0]){Serial.print("1");}
+    if(minVal == Distances[1]){Serial.print("2");}
+    if(minVal == Distances[2]){Serial.print("3");}
+    if(minVal == Distances[3]){Serial.print("4");}
+</pre>
+<sup>GivenPos on käyttäjän antama asento.</sup></br>
+
+Sitten kun tulokset tulivat sarjamonitorille kopioin ne sieltä Data.log ja Data2.log tiedostoihin confusion matrixia varten. Tein yhteensä 400 mittausta joka asennossa molempiin tiedostoihin. Tiedostojen ero on se, että toisessa on mittaukset, jossa heilutin arduinoa samalla. Tässä pieni pätkä Data.log:ista:
+<pre>
+1  3
+1  3
+1  3
+1  1
+1  1
+1  1
+</pre>
+<sup>Kuten näkyy väitin asennoksi 1 (UP), mutta joissakin kohti algoritmi sanoo asennoksi 3 (LEFT), joka on oikea asento.</sup>
