@@ -16,10 +16,11 @@ Syksyn 2022  tietoliikenteen sovellusprojekti
     1. [Komponentit](#komponentit)
     2. [Arduinon ohjelma](#arduinon-ohjelma)
 6. [Python](#python)
-    1. [TCP/socket ja datahaku](#tcpsocket-ja-datahaku)
-    2. [Requests (MainDatahaku.py)](#requests-maindatahakupy)
-    3. [K-means](#k-means)
-    4. [Confusion Matrix](#confusion-matrix)
+    1. [Kirjastot](#kirjastot)
+    2. [TCP/socket ja datahaku](#tcpsocket-ja-datahaku)
+    3. [Requests (MainDatahaku.py)](#requests-maindatahakupy)
+    4. [K-means](#k-means)
+    5. [Confusion Matrix](#confusion-matrix)
 7. [Arduino K-means](#arduino-k-means)
 
 </br>
@@ -92,6 +93,15 @@ Kuvaukset ohjelmista alempana
 ## Python
 Ohjelmat joiden nimen edessä on [T] ovat testi ohjelmia. [P] merkitsee ohjelmat, joita projekti käyttää toimiakseen.
 
+### Kirjastot
+Lista projektissa käytetyistä kirjastoista (ei sisällä socket tai mysql connector kirjastoja, koska niitä käytin vain testi ohjelmissa):
+- Numpy
+- Matplotlib
+- sklearn
+- Pandas
+- Requests
+
+
 ### TCP/socket ja datahaku
  Tiedon sain haettua monella eri tapaa, jotka ovat:
  - requests (RequestsDatahaku.py ja MainDatahaku.py)
@@ -121,15 +131,44 @@ Heti sen jälkeen ohjelma formatoi saadun datan selvemmäksi K-means ohjelmalle 
 Data on nyt valmis K-means algoritmille.
 
 ### K-means
+
+Ensimmäisenä ohjelma käyttää pandasta xyz_data.csv tuomiseen ohjelmaan. Dataframe johon data laitettiin pandaksella muutetaan numpy arrayksi. 
+> df = pd.read_csv('xyz_data.csv', usecols=['5','6','7'])
+>
+> print(df)
+>
+> nData=df.to_numpy()
+
+Sen jälkeen arvotaan 4 keskipistettä satunnaisesti datan isoimman ja pienimmän arvon mukaan np.random.randint functiolla. 
+> CenterPoints = np.random.randint(np.min(nData),np.max(nData),size=(4,3))
+
+
+Ohjelma aloittaa sitten uusien keskipisteidän löytämisen for looppien sisällä laskemalla jokaisen arvotun keskipisteen etäisyyden jokaiseen xyz datapisteeseen. Sitten katsotaan mikä neljästä keskipisteestä oli lähimpänä kyseiseen xyz datapisteseen. Ohjelma antaa sitten sille keskipisteelle "pisteen" Counts muuttujaan, joka oli lähimpänä sitä xyz datapistettä ja lisää centerPointCumulativeSum arrayhin datapisteen arvot siihen kohtaan mikä keskipiste oli lähimpänä datapistettä (esim keskipiste 2 oli lähimpänä datapistettä niin centerPointCumulativeSum arrayn kohtaan 2 lisätään datapisteen xyz arvot).
+<pre>
+for k in range(numberOfLoops):
+    centerPointCumulativeSum = np.zeros((4,3),dtype=int)                             
+    Counts = np.zeros((1,4),dtype=int)                                                
+    Distances = np.zeros((1,4),dtype=int)   
+    for i in range(numberOfRows):
+        for j in range(4):
+            Distances[0][j] = np.linalg.norm(nData[i]-CenterPoints[j])
+        Cluster = np.argmin(Distances)
+        centerPointCumulativeSum[Cluster] += nData[i]
+        Counts[0][Cluster] += 1
+</pre>
+
+
+</br>
+
 ![kmeans1](https://user-images.githubusercontent.com/97531298/206868055-11be2b60-5968-4c7b-aca1-247cfa457db9.png)
  
-Kuva datasta ennen k-means algoritmin määrittämiä keskipisteitä. Jokainen sininen pallo on xyz datapiste, joita on yli 400 omassa datassani. Osa palloista on niin lähellä toisiaan että kuva näyttää ne päällekkäin. 
+Kuva datasta plotattuna matplotlibillä ennen k-means algoritmin määrittämiä keskipisteitä. Jokainen sininen pallo on xyz datapiste, joita on yli 400 omassa datassani. Osa palloista on niin lähellä toisiaan että kuva näyttää ne päällekkäin. 
 
 </br>
 
 ![kmeans2](https://user-images.githubusercontent.com/97531298/206868058-67e9b2d7-c56c-4480-af75-0957dac56724.png)
 
-Kuva datasta algoritmin jälkeen. Punaiset rastit ovat keskipisteet ja vihreät kolmiot ovat pisteitä joissa keskipiste oli jossain välissä algoritmia.
+Kuva datasta plotattuna algoritmin jälkeen. Punaiset rastit ovat keskipisteet ja vihreät kolmiot ovat pisteitä joissa keskipiste oli jossain välissä algoritmia.
 
 
 
