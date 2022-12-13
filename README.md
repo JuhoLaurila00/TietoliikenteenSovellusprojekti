@@ -1,13 +1,11 @@
-<span style="color:red">
-<font size="10">
-WIP README 
-</font>
-</span>
+---
+author: Juho Laurila
+---
 
-# Tietoliikenteen Sovellusprojekti
-Syksyn 2022  tietoliikenteen sovellusprojekti
+# **Tietoliikenteen Sovellusprojekti**
+Syksyn 2022  tietoliikenteen sovellusprojekti.
 
-## Sisältö
+## **Sisältö**
 1. [Kuvaus Projektista](#kuvaus-projektista)
 2. [Käytetyt Ohjelmistot](#käytetyt-ohjelmistot)
 3. [Arkkitehtuuri](#arkkitehtuuri)
@@ -25,13 +23,13 @@ Syksyn 2022  tietoliikenteen sovellusprojekti
 
 </br>
 
-## Kuvaus Projektista
+## **Kuvaus Projektista**
 
   Projektissa käytetään arduinoa xyz kiihtyvysdatan mittaamiseen ja lähettämiisen opettajan vastaanottavaan laitteeseen 433MHz radiolähettimellä. Laite laittaa datan MySQL tietokantaan, josta se sitten haetaan omalla tietokoneella pythonilla ja käsitellään se K-means algoritmilla. Tarkkuus tarkistetaan tämän jälkeen arduinolla, kun K-means koodi tallentaa CenterPoints.h nimisen tiedoston, jota tullaan käyttämään arduino koodissa.
 
 </br>
 
-## Käytetyt Ohjelmistot
+## **Käytetyt Ohjelmistot**
 
 - Visual Studio Code (Python koodille)
 - Arduino IDE (Arduino koodille)
@@ -40,13 +38,13 @@ Syksyn 2022  tietoliikenteen sovellusprojekti
 </br>
 
 
-## Arkkitehtuuri
+## **Arkkitehtuuri**
 
 ![image](https://user-images.githubusercontent.com/97531298/199923738-0a49c750-2408-4f4b-a696-a13558a3ca13.png)
 
 </br>
 
-## Tehdyt Ohjelmat
+## **Tehdyt Ohjelmat**
 Lista tehdyistä ohjelmista, joita projekti käyttää:
 
 - Transmitter.ino
@@ -72,14 +70,14 @@ Kuvaukset ohjelmista alempana
 
 </br>
 
-## Arduino mittaukset ja lähetys
-### Komponentit
+## **Arduino mittaukset ja lähetys**
+### **Komponentit**
 - GY-61 Kiihtyvyysanturi
 - Arduino
 - RWS-371 Vastaanotin
 - TWS-BS Lähetin
 
-### Arduinon ohjelma
+### **Arduinon ohjelma**
  Koodi koostuu pääohjelmasta ja kahdesta luokasta (accelerator ja messaging).
  
  Accelerator luokkaa käytetään mittausten tekemiseen ja sen tallentamiseen Measurement nimiseen struktiin, jossa on sisällä x,y,z arvot.
@@ -90,10 +88,11 @@ Kuvaukset ohjelmista alempana
 
 </br>
 
-## Python
+## **Python**
 Ohjelmat joiden nimen edessä on [T] ovat testi ohjelmia. [P] merkitsee ohjelmat, joita projekti käyttää toimiakseen.
 
-### Kirjastot
+
+### **Kirjastot**
 Lista projektissa käytetyistä kirjastoista (ei sisällä socket tai mysql connector kirjastoja, koska niitä käytin vain testi ohjelmissa):
 - Numpy
 - Matplotlib
@@ -101,8 +100,9 @@ Lista projektissa käytetyistä kirjastoista (ei sisällä socket tai mysql conn
 - Pandas
 - Requests
 
+</br>
 
-### TCP/socket ja datahaku
+### **TCP/socket ja datahaku**
  Tiedon sain haettua monella eri tapaa, jotka ovat:
  - requests (RequestsDatahaku.py ja MainDatahaku.py)
  - mysql.connector (ConnectorDatahaku.py)
@@ -112,7 +112,9 @@ Lista projektissa käytetyistä kirjastoista (ei sisällä socket tai mysql conn
  - TCP-socketilla ei saanut kaikkea tietoa tietokannasta (Vain 300 riviä tietoa)
  - mysql.connector:illa sain kaiken tiedon tietokannasta, mutta sen oli turhan sotkuinen, enkä saanut tietoa helposti formatoitua pandaksella.
 
- ### Requests (MainDatahaku.py)
+</br>
+
+ ### **Requests (MainDatahaku.py)**
 
  Ohjelma hakee data r nimiseen muuttujaan requests.get komennolla, jonka jälkeen se muutetaan tekstiksi data nimiseen muuttujaan.
    
@@ -132,7 +134,9 @@ df.to_csv('xyz_data.csv')
 
 Data on nyt valmis K-means algoritmille.
 
-### K-means
+</br>
+
+### **K-means**
 
 Ensimmäisenä ohjelma käyttää pandasta xyz_data.csv tuomiseen ohjelmaan. Dataframe johon data laitettiin pandaksella muutetaan numpy arrayksi. 
 <pre>
@@ -185,18 +189,52 @@ Kuva datasta plotattuna matplotlibillä ennen k-means algoritmin määrittämiä
 
 Kuva datasta plotattuna algoritmin jälkeen. Punaiset rastit ovat keskipisteet ja vihreät kolmiot ovat pisteitä joissa keskipiste oli jossain välissä algoritmia.
 
-### Confusion Matrix
-![CM](https://user-images.githubusercontent.com/97531298/206867805-340ebdb5-3f3a-413b-ac64-2d08fd3e56e5.PNG)
+</br>
 
-<span style="color:red">
-<font size="5">
-!!! KUVAUS TOIMINNASTA !!!
-</font>
-</span>
+### **Confusion Matrix**
+
+Suosittelen lukemaan Arduino K-means osan ennen kuin luet tämän.
 
 </br>
 
-## Arduino K-means
+Confusion matrix ei ollut kovin monimutkainen toteuttaa sklearnia ja numpyä käyttäen. Ensiksi koodissa importataan kirjastot ja data: 
+<pre>
+import numpy as np
+from sklearn.metrics import confusion_matrix
+
+data = np.loadtxt('Data.log')       #Data jossa heiluttelin arduinoa samalla
+data2 = np.loadtxt('Data2.log')     #Data jossa pidin arduinoa annetussa asennossa koko ajan
+</pre>
+
+Sitten sijoitetaan Data.log tiedot kahteen numpy arrayhin. dataTrue on ArduinoKmeans ohjelmassa käyttäjän antama asento ja dataPred on algoritmin antama asento. Sama tehtiin Data2.log tiedoille.
+<pre>
+dataTrue = data[:,0]
+dataPred = data[:,1]
+data2True = data2[:,0]
+data2Pred = data2[:,1]
+</pre>
+
+Sitten koodissa tehdään confusion matrixit:
+<pre>
+cm = confusion_matrix(dataTrue, dataPred) 
+print("Heiluteltu arduino CM")
+print(cm)
+
+print("")
+
+cm2 = confusion_matrix(data2True, data2Pred)
+print("Oikea CM")
+print(cm2)
+</pre>
+<sup>dataTrue, dataPred jne muuttujia ei olisi pakko tehdä. Tiedot pystyisi syöttämään suoraan confusion matrixiin, mutta tein muuttujat koska se teki mielestäni koodista selvemmän.</sup>
+
+Alla kuva tuloksista
+
+![CM](https://user-images.githubusercontent.com/97531298/206867805-340ebdb5-3f3a-413b-ac64-2d08fd3e56e5.PNG)
+
+</br>
+
+## **Arduino K-means**
 
 ArduinoKmeans ohjelmassa katsotaan kuinka tarkka algoritmi on kmeansin antamilla keskipisteillä. Ensimmäiseksi otetaan ohjelmaan mukaan edellisen ohjelman tekemä CenterPoints.h tiedosto, joka sisältää kmeansin antamat keskipisteet. 
 <pre>
