@@ -117,31 +117,34 @@ Lista projektissa käytetyistä kirjastoista (ei sisällä socket tai mysql conn
  Ohjelma hakee data r nimiseen muuttujaan requests.get komennolla, jonka jälkeen se muutetaan tekstiksi data nimiseen muuttujaan.
    
 Ohjelma luo ja tallentaa datan xyz_data.csv tiedostoon seuraavalla koodilla:
-> with open('xyz_data.csv', 'w') as f:
->
-> f.write(data) 
+<pre>
+with open('xyz_data.csv', 'w') as f:
+
+f.write(data)
+</pre> 
   
 Heti sen jälkeen ohjelma formatoi saadun datan selvemmäksi K-means ohjelmalle tällä koodilla:
->df = pd.read_csv('xyz_data.csv', delimiter=';', header=None)
->
->print(df)
->
->df.to_csv('xyz_data.csv')
+<pre>
+df = pd.read_csv('xyz_data.csv', delimiter=';', header=None)
+print(df)
+df.to_csv('xyz_data.csv')
+</pre>
 
 Data on nyt valmis K-means algoritmille.
 
 ### K-means
 
 Ensimmäisenä ohjelma käyttää pandasta xyz_data.csv tuomiseen ohjelmaan. Dataframe johon data laitettiin pandaksella muutetaan numpy arrayksi. 
-> df = pd.read_csv('xyz_data.csv', usecols=['5','6','7'])
->
-> print(df)
->
-> nData=df.to_numpy()
+<pre>
+df = pd.read_csv('xyz_data.csv', usecols=['5','6','7'])
+print(df)
+nData=df.to_numpy()
+</pre>
 
 Sen jälkeen arvotaan 4 keskipistettä satunnaisesti datan isoimman ja pienimmän arvon mukaan np.random.randint functiolla. 
-> CenterPoints = np.random.randint(np.min(nData),np.max(nData),size=(4,3))
-
+<pre>
+CenterPoints = np.random.randint(np.min(nData),np.max(nData),size=(4,3))
+</pre>
 
 Ohjelma aloittaa sitten uusien keskipisteidän löytämisen for looppien sisällä laskemalla jokaisen arvotun keskipisteen etäisyyden jokaiseen xyz datapisteeseen. Sitten katsotaan mikä neljästä keskipisteestä oli lähimpänä kyseiseen xyz datapisteseen. Ohjelma antaa sitten sille keskipisteelle "pisteen" Counts muuttujaan, joka oli lähimpänä sitä xyz datapistettä ja lisää centerPointCumulativeSum arrayhin datapisteen arvot siihen kohtaan mikä keskipiste oli lähimpänä datapistettä (esim keskipiste 2 oli lähimpänä datapistettä niin centerPointCumulativeSum arrayn kohtaan 2 lisätään datapisteen xyz arvot).
 <pre>
@@ -157,6 +160,18 @@ for k in range(numberOfLoops):
         Counts[0][Cluster] += 1
 </pre>
 
+Sitten mennään uuten for looppin, jossa "arvotaan" uudet keksipisteet. Jos edellien arvottu keskipiste ei saanut yhtään pistettä (ei ollut lähimpänä yhtäkään datapistettä), sille arvotaan satunnaisesti uusi xyz arvo. Jos keksipiste sai enemmän pisteitä kuin 0, niin uusi keskipisteen paikka määritetään jakamalla CenterPointCumulativeSum pisteiden määrällä.
+<pre>
+for i in range(4):
+        if Counts[0][i] == 0:
+            CenterPoints[i] = np.random.randint(np.min(nData),np.max(nData),size=(1,3))
+        else:
+            CenterPoints[i] = centerPointCumulativeSum[i]/Counts[0][i]
+
+AllCenterPoints[k] = CenterPoints.reshape(1,12)
+</pre>
+
+Ohjelma myös tallentaa kaikkien looppien varrella olleiden keskipisteiden paikat AllCenterPoints arrayhin. Sitten kun kaikki loopit on tehty ohjelma käyttää matplotlibiä datapisteiden, keskipisteiden ja varrella olleiden keskipisteiden plottaamiseen. Ja tallentaa myös lopulliset keskipisteet CenterPoints.h tiedostoon arduinoa varten.
 
 </br>
 
@@ -169,15 +184,6 @@ Kuva datasta plotattuna matplotlibillä ennen k-means algoritmin määrittämiä
 ![kmeans2](https://user-images.githubusercontent.com/97531298/206868058-67e9b2d7-c56c-4480-af75-0957dac56724.png)
 
 Kuva datasta plotattuna algoritmin jälkeen. Punaiset rastit ovat keskipisteet ja vihreät kolmiot ovat pisteitä joissa keskipiste oli jossain välissä algoritmia.
-
-
-
-
-<span style="color:red">
-<font size="5">
-!!! KUVAUS TOIMINNASTA !!!
-</font>
-</span>
 
 ### Confusion Matrix
 ![CM](https://user-images.githubusercontent.com/97531298/206867805-340ebdb5-3f3a-413b-ac64-2d08fd3e56e5.PNG)
